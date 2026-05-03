@@ -1,0 +1,36 @@
+name: hello-world
+version: 0.1.0
+description: "极简 Skill 示例 — 输出问候语"
+author: "IHub Team"
+license: "Apache-2.0"
+tags: [example, hello-world]
+dependencies: []
+
+inputs:
+  name:
+    type: string
+    description: "要问候的名字"
+    required: false
+    default: "World"
+
+outputs:
+  greeting:
+    type: string
+    description: "生成的问候语"
+
+runtime:
+  engine: shell
+  entry: run.sh
+  timeout: 10
+  sandbox: false
+
+ai_context: |
+  ## 使用场景
+  最简单的 Skill 示例，用于演示 manifest.yaml 的结构约定。
+
+  ## 集成方式
+  CLI 调用：`ihub skill run hello-world --name=User`
+  MCP 调用：`ihub_skill_run(skill="hello-world", inputs={name: "User"})`
+
+  ## 注意事项
+  这是一个示例 Skill，不提供实际业务能力。

@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: ihub-mcp-server
+  ai:
+    mcp:
+      server:
+        name: IHub MCP Server
+        version: 0.1.0
+        type: SYNC

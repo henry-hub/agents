@@ -1,0 +1,79 @@
+# IHub Skill Manifest Schema v1.0
+# 每个 Skill 的 manifest.yaml 定义其接口、实现、元数据
+
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: "IHub Skill Manifest"
+type: object
+required: [name, version, description]
+properties:
+  name:
+    type: string
+    description: "Skill 唯一标识名（kebab-case）"
+    pattern: "^[a-z][a-z0-9-]*$"
+  version:
+    type: string
+    description: "语义版本号"
+    pattern: "^\\d+\\.\\d+\\.\\d+(-[a-zA-Z0-9.]+)?$"
+  description:
+    type: string
+    description: "一句话描述 Skill 的功能"
+    maxLength: 200
+  author:
+    type: string
+    description: "作者信息"
+  license:
+    type: string
+    description: "许可证（SPDX 标识）"
+  tags:
+    type: array
+    items: { type: string }
+    description: "分类标签"
+  dependencies:
+    type: array
+    items:
+      type: object
+      properties:
+        name: { type: string }
+        version: { type: string }
+      required: [name, version]
+    description: "依赖的其他 Skill"
+  inputs:
+    type: object
+    description: "输入参数定义（JSON Schema 风格）"
+    additionalProperties:
+      type: object
+      properties:
+        type: { type: string, enum: [string, number, boolean, array, object] }
+        description: { type: string }
+        required: { type: boolean }
+        default: {}
+  outputs:
+    type: object
+    description: "输出定义"
+    additionalProperties:
+      type: object
+      properties:
+        type: { type: string }
+        description: { type: string }
+  runtime:
+    type: object
+    description: "运行时配置"
+    properties:
+      engine:
+        type: string
+        description: "执行引擎"
+        enum: [shell, python, node, docker, wasm, jvm]
+      entry:
+        type: string
+        description: "入口文件路径"
+      timeout:
+        type: integer
+        description: "超时时间（秒）"
+        default: 300
+      sandbox:
+        type: boolean
+        description: "是否启用沙箱"
+        default: false
+  ai_context:
+    type: string
+    description: "面向 LLM 的结构化 Markdown — 描述此 Skill 的使用场景、集成方式、注意事项"
