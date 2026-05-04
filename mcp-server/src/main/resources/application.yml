@@ -7,3 +7,10 @@ spring:
         name: IHub MCP Server
         version: 0.1.0
         type: SYNC
+
+ihub:
+  catalog:
+    # 默认从 classpath 加载打包进 jar 的 catalog.json（开发/测试用）
+    # 生产部署时可覆盖为文件系统路径，如：
+    #   ihub.catalog.resource=file:/opt/ihub/libs/gradle/ihub-catalog/catalog.json
+    resource: classpath:ihub-catalog/catalog.json
