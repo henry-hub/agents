@@ -21,7 +21,7 @@ public record CatalogEntry(
         List<String> alternatives,
         @JsonProperty("gradle_ref") Object gradleRef,
         @JsonProperty("version_ref") String versionRef,
-        List<String> dependencies,
+        Object dependencies,
         List<String> tags,
         String status,
         List<String> stage,
