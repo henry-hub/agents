@@ -47,10 +47,10 @@ agents/
 
 | 组件 | 定位 | 技术栈 | 状态 |
 |------|------|--------|------|
-| [mcp-server](./mcp-server/) | AI 工具的统一 MCP 接口 | Spring Boot 4.x + Spring AI MCP | 🚧 骨架 |
-| [cli](./cli/) | ihub 命令行入口 | Java 17 + Picocli | 🚧 骨架 |
-| [skills](./skills/) | 可编排的能力单元 | 语言无关（Shell/Python/JS/Java） | 🚧 规范定义 |
-| [runtime](./runtime/) | Skills 执行引擎 | 待定（P2 决策） | 🔮 规划 |
+| [mcp-server](./mcp-server/) | AI 工具的统一 MCP 接口 | Spring Boot 4.x + Spring AI 2.0 MCP | ✅ 已实现 |
+| [cli](./cli/) | ihub 命令行入口（AI 代理的补充） | Java 17 + Picocli | 🚧 骨架 |
+| [skills](./skills/) | 可编排的能力单元（对齐 Claude Code Skills 格式） | 语言无关（Shell/Python/JS/Java） | 🚧 规范定义 |
+| [runtime](./runtime/) | Skills 执行引擎 | 待定 | 📋 P3 观察 |
 
 ## 快速开始
 
@@ -93,9 +93,10 @@ agents 自身使用 IHub plugins 构建：
 
 | 阶段 | 内容 |
 |------|------|
-| P1 · 基础建设 | 仓库骨架、接口定义、ADR、Skills 规范 |
-| P2 · 能力扩展 | MCP Server 实现、CLI 首版、Skills Runtime |
-| P3 · 生态闭环 | 多语言支持、Skill 市场、社区建设 |
+| P1 · 基础建设 | ✅ 仓库骨架、接口定义、ADR、Skills 规范 |
+| P1.5 · 补债对齐 | ✅ libs catalog 正规化、Spring AI 2.0 升级、catalog 同步 |
+| P2 · 能力扩展 | MCP 端到端贯通、迁移工具真实化、Skills 首版 |
+| P3 · 生态闭环 | Skills 市场、多 AI 平台适配、社区建设 |
 
 ## License
 
