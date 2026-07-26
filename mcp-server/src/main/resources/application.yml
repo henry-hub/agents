@@ -14,3 +14,8 @@ ihub:
     # 生产部署时可覆盖为文件系统路径，如：
     #   ihub.catalog.resource=file:/opt/ihub/libs/gradle/ihub-catalog/catalog.json
     resource: classpath:ihub-catalog/catalog.json
+  modules:
+    # 默认扫描 classpath 中 META-INF/ihub/module-descriptor.json（业务模块 JAR 携带）
+    # 开发时可指向 modules 仓库的描述符，无需将业务模块 JAR 加入 classpath：
+    #   ihub.modules.resource=file:///Users/henry/Documents/GitHub/modules/**/META-INF/ihub/module-descriptor.json
+    resource: classpath*:META-INF/ihub/module-descriptor.json
