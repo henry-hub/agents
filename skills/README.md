@@ -22,12 +22,28 @@ skills/
 ├── README.md           # 本文件
 ├── examples/           # 示例 Skill（演示结构约定）
 │   └── hello-world/    # 最简 Skill 示例
-├── catalog.yaml        # Skill 目录索引（未来）
-└── <skill-name>/       # 每个 Skill 一个目录
-    ├── manifest.yaml   # Skill 元数据
-    └── ...             # 实现文件
+├── ihub-catalog/       # IHub 能力目录查询技能
+│   └── skill.md
+├── ihub-init/          # IHub 项目初始化技能
+│   └── skill.md
+├── ihub-migrate/       # IHub 旧系统迁移分析技能
+│   └── skill.md
+└── manifest.schema.yaml
 ```
+
+## 可用 Skills
+
+| Skill | 触发场景 | 格式 |
+|-------|---------|------|
+| `ihub-catalog` | 技术选型、组件查询、替代方案比较 | Claude Code Skill |
+| `ihub-init` | 创建新项目、配置 Gradle 构建 | Claude Code Skill |
+| `ihub-migrate` | 升级 Spring Boot / Java 版本、技术债务分析 | Claude Code Skill |
+| `hello-world` | 示例 / 演示 manifest 结构 | IHub manifest |
+
+### 安装方式
+
+Skills 通过 `pub.ihub.plugin.ihub-skills` Gradle 插件自动安装到项目的 `.claude/commands/` 目录，也可手动复制 `skill.md` 到目标项目。
 
 ## 状态
 
-🚧 P1 阶段：规范定义 + 示例 Skill，待 P2/P3 扩展。
+✅ P2 阶段：首批 3 个 Claude Code Skills 已发布，对齐主流 AI 编码代理格式。
