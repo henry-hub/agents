@@ -5,17 +5,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Component;
+import pub.ihub.agent.mcp.migrate.ProjectScanner;
+import pub.ihub.integration.migrate.analyzer.ProjectAnalyzer;
+import pub.ihub.integration.migrate.core.AnalysisReport;
+import pub.ihub.integration.migrate.core.ProjectContext;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * IHub 迁移分析 MCP 工具，为 AI 提供遗留系统迁移的结构化指引。
+ * IHub 迁移分析 MCP 工具，为 AI 提供遗留系统迁移的结构化指引与真实分析能力。
  * <p>
- * 工具本身不运行分析（分析引擎在 agents/java-agent 中），
- * 而是提供迁移规则目录、问题分类和集成方案描述，
- * 帮助 AI 制定迁移策略并指导开发者执行。
+ * 静态指南工具（listMigrationCategories / getMigrationGuide / getMigrationRoadmap）
+ * 提供迁移规则目录和步骤描述；analyzeProject 调用 ihub-migrate-analyzer 真实分析项目，
+ * 返回结构化报告（问题列表、严重度、修复建议）。
  */
 @Component
 public class MigrateTools {
@@ -24,6 +28,25 @@ public class MigrateTools {
 
     public MigrateTools(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
+    }
+
+    @Tool(description = "分析指定路径的 Java/Gradle 项目，运行 IHub 迁移规则，返回结构化分析报告。"
+            + "扫描项目的依赖和 Java 版本，检测过时依赖（如 fastjson/log4j/junit）和 Java 版本是否满足 17+ LTS。"
+            + "报告含问题列表（severity/description/fix）、汇总和阻断项标记。"
+            + "可结合 getMigrationGuide 制定迁移策略。")
+    public String analyzeProject(@ToolParam(description = "项目根路径（绝对路径）") String projectPath) {
+        ProjectContext ctx;
+        try {
+            ctx = ProjectScanner.scan(projectPath);
+        } catch (Exception e) {
+            return toJson(Map.of(
+                "error", "Failed to scan project: " + e.getMessage(),
+                "hint", "Ensure the path is a valid project root with gradle/libs.versions.toml or build/ihub/project-meta.json"
+            ));
+        }
+        ProjectAnalyzer analyzer = new ProjectAnalyzer();
+        AnalysisReport report = analyzer.analyze(ctx);
+        return toJson(toReportMap(report, ctx));
     }
 
     @Tool(description = "列出 IHub 支持的迁移分析规则分类（category），"
@@ -184,6 +207,32 @@ public class MigrateTools {
     }
 
     // ---- helpers ----
+
+    /** 将 AnalysisReport 转为可序列化的 Map（含上下文与统计） */
+    private Map<String, Object> toReportMap(AnalysisReport report, ProjectContext ctx) {
+        Map<String, Object> m = new LinkedHashMap<>();
+        m.put("projectName", report.projectName());
+        m.put("projectPath", report.projectPath());
+        m.put("analyzedAt", report.analyzedAt() != null ? report.analyzedAt().toString() : null);
+        m.put("summary", report.summary());
+        m.put("totalIssues", report.totalIssues());
+        m.put("hasBlockers", report.hasBlockers());
+        m.put("scannedDependencies", ctx.dependencies() != null ? ctx.dependencies().size() : 0);
+        m.put("javaVersion", ctx.javaVersion());
+        m.put("buildTool", ctx.buildTool());
+        List<Map<String, Object>> results = report.results().stream()
+            .map(r -> {
+                Map<String, Object> rm = new LinkedHashMap<>();
+                rm.put("ruleId", r.ruleId());
+                rm.put("issueCount", r.issues() != null ? r.issues().size() : 0);
+                rm.put("issues", r.issues() != null ? r.issues() : List.of());
+                rm.put("suggestions", r.suggestions() != null ? r.suggestions() : List.of());
+                return rm;
+            })
+            .toList();
+        m.put("results", results);
+        return m;
+    }
 
     private Map<String, Object> category(String id, String name, String description, List<String> examples) {
         Map<String, Object> m = new LinkedHashMap<>();
