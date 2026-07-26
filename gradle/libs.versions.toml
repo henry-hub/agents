@@ -2,13 +2,16 @@
 spring-boot = '4.0.6'
 spring-ai = '2.0.0'
 picocli = '4.7.6'
+ihub-migrate = 'main-SNAPSHOT'
 
 [libraries]
 spring-boot-dependencies = { module = 'org.springframework.boot:spring-boot-dependencies', version.ref = 'spring-boot' }
 spring-ai-bom = { module = 'org.springframework.ai:spring-ai-bom', version.ref = 'spring-ai' }
 spring-boot-starter-web = { module = 'org.springframework.boot:spring-boot-starter-web' }
+spring-boot-starter-test = { module = 'org.springframework.boot:spring-boot-starter-test' }
 spring-ai-starter-mcp-server = { module = 'org.springframework.ai:spring-ai-starter-mcp-server' }
 picocli = { module = 'info.picocli:picocli', version.ref = 'picocli' }
+ihub-migrate-analyzer = { module = 'pub.ihub.integration:ihub-migrate-analyzer', version.ref = 'ihub-migrate' }
 
 [bundles]
 mcp-server = ['spring-boot-starter-web', 'spring-ai-starter-mcp-server']
