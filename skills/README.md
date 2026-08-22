@@ -20,14 +20,15 @@ Skills 是"轻量级插件"——插件侧重构建约定和 Gradle 集成，Ski
 ```
 skills/
 ├── README.md           # 本文件
+├── install.sh          # 安装脚本（复制 Skills 到 .claude/skills/）
 ├── examples/           # 示例 Skill（演示结构约定）
 │   └── hello-world/    # 最简 Skill 示例
 ├── ihub-catalog/       # IHub 能力目录查询技能
-│   └── skill.md
+│   └── SKILL.md
 ├── ihub-init/          # IHub 项目初始化技能
-│   └── skill.md
+│   └── SKILL.md
 ├── ihub-migrate/       # IHub 旧系统迁移分析技能
-│   └── skill.md
+│   └── SKILL.md
 └── manifest.schema.yaml
 ```
 
@@ -42,7 +43,34 @@ skills/
 
 ### 安装方式
 
-Skills 通过 `pub.ihub.plugin.ihub-skills` Gradle 插件自动安装到项目的 `.claude/commands/` 目录，也可手动复制 `skill.md` 到目标项目。
+每个 Skill 是符合 [Claude Code Skills](https://docs.claude.com/en/docs/claude-code/skills) 格式的
+`SKILL.md`（含 YAML frontmatter：`name` + `description`）。
+
+**方式 A：安装脚本（推荐）**
+
+```bash
+# 安装到当前项目
+agents/skills/install.sh
+
+# 安装到用户级（所有项目可用）
+agents/skills/install.sh global
+
+# 安装到指定项目
+agents/skills/install.sh /path/to/project
+```
+
+**方式 B：手动复制**
+
+```bash
+cp -r skills/ihub-catalog /path/to/project/.claude/skills/
+```
+
+安装后 Claude Code 会根据 `description` 中的触发场景自动发现并使用，
+也可用 `/ihub-catalog` 等命令显式调用。
+
+> 注：`pub.ihub.plugin.ihub-skills` Gradle 插件安装的是构建诊断类斜杠命令
+> （`.claude/commands/` 下的 `/ihub-diagnose`、`/ihub-configure`），与本目录的
+> Claude Code Skills 是不同的分发渠道。
 
 ## 状态
 
