@@ -19,3 +19,9 @@ ihub:
     # 开发时可指向 modules 仓库的描述符，无需将业务模块 JAR 加入 classpath：
     #   ihub.modules.resource=file:///Users/henry/Documents/GitHub/modules/**/META-INF/ihub/module-descriptor.json
     resource: classpath*:META-INF/ihub/module-descriptor.json
+  mcp:
+    security:
+      # Bearer 令牌认证（ADR-0004）：生产部署必须配置，
+      # 未配置时以开发模式运行（放行所有请求 + WARN 日志）：
+      #   ihub.mcp.security.token=<随机强口令>
+      token: ${IHUB_MCP_TOKEN:}

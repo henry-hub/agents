@@ -96,6 +96,7 @@ agents 自身使用 IHub plugins 构建：
 所有重要架构决策通过 ADR 记录在 [docs/adr/](./docs/adr/)：
 - [ADR-0002](docs/adr/0002-agents-gradle-build.md) — 使用 Gradle + IHub Plugins 构建
 - [ADR-0003](docs/adr/0003-cli-technology-choice.md) — CLI 技术选型（Java + Picocli）
+- [ADR-0004](docs/adr/0004-mcp-security-design.md) — MCP Server 认证与安全设计（基线）
 
 ## 路线图
 
