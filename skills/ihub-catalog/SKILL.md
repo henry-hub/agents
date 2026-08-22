@@ -1,3 +1,8 @@
+---
+name: ihub-catalog
+description: 为 Java/Spring Boot 项目提供 IHub 能力目录查询与技术选型推荐。当用户询问用什么 ORM、认证框架、分布式锁、工作流引擎、Excel 工具，或需要了解组件集成方式、替代方案、常见陷阱时使用。
+---
+
 # IHub 能力目录查询
 
 当用户需要为 Java/Spring Boot 项目选择技术组件时，使用 IHub 能力目录提供结构化推荐。

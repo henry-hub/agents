@@ -1,3 +1,8 @@
+---
+name: ihub-init
+description: 引导创建新的 Java/Spring Boot 项目并接入 IHub Plugins 构建体系（ihub-settings/ihub-java/ihub-boot）。当用户要创建新项目、起一个 Spring Boot 项目、配置 Gradle 构建、接入 IHub 插件时使用。
+---
+
 # IHub 项目初始化
 
 当用户要创建新的 Java/Spring Boot 项目时，引导其使用 IHub Plugins 构建体系。

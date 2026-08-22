@@ -1,3 +1,8 @@
+---
+name: ihub-migrate
+description: 分析遗留 Java 项目的技术债务并生成结构化迁移方案（Java 升级、Spring Boot 2→3→4、javax→jakarta、Gradle 现代化）。当用户要升级 Spring Boot / JDK / Gradle 版本、迁移旧系统、评估升级路径和风险时使用。
+---
+
 # IHub 旧系统迁移分析
 
 当用户需要升级或迁移旧 Java 项目时，提供结构化的分析流程和迁移建议。
