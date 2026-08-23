@@ -6,7 +6,7 @@ pluginManagement {
 }
 
 plugins {
-    id("pub.ihub.plugin.ihub-settings") version "agent-SNAPSHOT"
+    id("pub.ihub.plugin.ihub-settings") version "2.0.0-m2"
 }
 
 rootProject.name = "ihub-agents"
